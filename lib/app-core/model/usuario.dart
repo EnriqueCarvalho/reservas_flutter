@@ -1,27 +1,31 @@
 
-class Usuario{
-  String id;
-  String nome;
-  String email;
-  String fone;
-  String tipo;
-  String cpf;
-  String login;
-  String senha;
-  String ativo;
+class Usuario {
+  int? id;
+  String? nome;
+  String? email;
+  String? fone;
+  String? tipo;
+  String? cpf;
+  String? login;
+  String? senha;
+  String? ativo;
+  String token;
+  int? idQuadra;
 
 //<editor-fold desc="Data Methods">
 
   Usuario({
-    required this.id,
-    required this.nome,
-    required this.email,
-    required this.fone,
-    required this.tipo,
-    required this.cpf,
-    required this.login,
-    required this.senha,
-    required this.ativo,
+    this.id ,
+    this.nome = '',
+    this.email = '',
+    this.fone = '',
+    this.tipo = '',
+    this.cpf = '',
+    this.login = '',
+    this.senha = '',
+    this.ativo = '',
+    this.token = '',
+    this.idQuadra ,
   });
 
   @override
@@ -37,7 +41,8 @@ class Usuario{
           cpf == other.cpf &&
           login == other.login &&
           senha == other.senha &&
-          ativo == other.ativo);
+          ativo == other.ativo &&
+          token == other.token);
 
   @override
   int get hashCode =>
@@ -49,7 +54,8 @@ class Usuario{
       cpf.hashCode ^
       login.hashCode ^
       senha.hashCode ^
-      ativo.hashCode;
+      ativo.hashCode ^
+      token.hashCode;
 
   @override
   String toString() {
@@ -63,11 +69,13 @@ class Usuario{
         ' login: $login,' +
         ' senha: $senha,' +
         ' ativo: $ativo,' +
+        ' token: $token,' +
+        ' idQuadra: $idQuadra,' +
         '}';
   }
 
   Usuario copyWith({
-    String? id,
+    int? id,
     String? nome,
     String? email,
     String? fone,
@@ -76,6 +84,8 @@ class Usuario{
     String? login,
     String? senha,
     String? ativo,
+    String? token,
+    int? idQuadra,
   }) {
     return Usuario(
       id: id ?? this.id,
@@ -87,10 +97,12 @@ class Usuario{
       login: login ?? this.login,
       senha: senha ?? this.senha,
       ativo: ativo ?? this.ativo,
+      token: token ?? this.token,
+      idQuadra: idQuadra ?? this.idQuadra,
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': this.id,
       'nome': this.nome,
@@ -101,22 +113,28 @@ class Usuario{
       'login': this.login,
       'senha': this.senha,
       'ativo': this.ativo,
+      'token': this.token,
+      'idQuadra': this.idQuadra,
     };
   }
 
   factory Usuario.fromMap(Map<String, dynamic> map) {
     return Usuario(
-      id: map['id'] as String,
-      nome: map['nome'] as String,
-      email: map['email'] as String,
-      fone: map['fone'] as String,
-      tipo: map['tipo'] as String,
-      cpf: map['cpf'] as String,
-      login: map['login'] as String,
-      senha: map['senha'] as String,
-      ativo: map['ativo'] as String,
+      id: map['id'] as int,
+      nome: map['nome'] ,
+      email: map['email'],
+      fone: map['fone'] ,
+      tipo: map['tipo'] ,
+      cpf: map['cpf'] ,
+      //login: map['login'] as String,
+      //senha: map['senha'] as String,
+      ativo: map['ativo'] ,
+      token: map['token'] ?? '',
+      idQuadra: map['idQuadra'] ,
     );
   }
+
+
 
 //</editor-fold>
 }

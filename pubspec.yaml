@@ -36,6 +36,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   flutter_modular: ^5.0.3
   cupertino_icons: ^1.0.2
+  sqflite:
+  http:
+  google_fonts:
+  awesome_drawer_bar:
+  file_picker:
+  http_interceptor: ^1.0.1
 
 dev_dependencies:
   flutter_test:

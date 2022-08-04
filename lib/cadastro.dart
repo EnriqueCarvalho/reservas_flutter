@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:reservas_flutter/app-core/model/usuario.dart';
 import 'package:reservas_flutter/app-core/service/usuario_service.dart';
 
 
@@ -10,13 +11,17 @@ class Cadastro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+    TextEditingController nomeController = TextEditingController();
+    TextEditingController cpfController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController foneController = TextEditingController();
+    TextEditingController loginController = TextEditingController();
+    TextEditingController senhaController = TextEditingController();
 
     return  Scaffold(
       appBar: AppBar(
           title:const  Text("Reservas.com.er"),
-          backgroundColor : Colors.green
+
 
 
       ),
@@ -32,7 +37,6 @@ class Cadastro extends StatelessWidget {
                   child: const Text(
                     'Cadastro ',
                     style: TextStyle(
-                        color: Colors.green,
                         fontWeight: FontWeight.w500,
                         fontSize: 30),
                   )),
@@ -40,7 +44,7 @@ class Cadastro extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
-                  controller: nameController,
+                  controller: nomeController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'NOME',
@@ -50,7 +54,7 @@ class Cadastro extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
-                  controller: nameController,
+                  controller: cpfController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'CPF',
@@ -60,8 +64,7 @@ class Cadastro extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
                 child: TextField(
-                  obscureText: true,
-                  controller: passwordController,
+                  controller: emailController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'EMAIL',
@@ -71,7 +74,7 @@ class Cadastro extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
-                  controller: nameController,
+                  controller: foneController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'FONE',
@@ -81,7 +84,7 @@ class Cadastro extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
-                  controller: nameController,
+                  controller: loginController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'LOGIN',
@@ -91,7 +94,8 @@ class Cadastro extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
-                  controller: nameController,
+                  controller: senhaController,
+                  obscureText: true,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'SENHA',
@@ -104,15 +108,28 @@ class Cadastro extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: ElevatedButton(
                     child: const Text('Cadastrar'),
-                    onPressed: () {
-                      if(UsuarioService().logar(nameController.text, passwordController.text)){
-                        Modular.to.navigate('/cliente');
+                    onPressed: () async{
+
+                      Usuario login = Usuario();
+
+                      login.nome =  nomeController.text;
+                      login.cpf =  cpfController.text;
+                      login.email =  emailController.text;
+                      login.fone =  foneController.text;
+                      login.login =  loginController.text;
+                      login.senha =  senhaController.text;
+
+                      Usuario? user = await UsuarioService().cadastro(login);
+                      print(user);
+
+                      if(user != null){
+                        Modular.to.navigate('/');
                       }else{
                         showDialog(context: context,
                           builder: (context){
                             return AlertDialog(
                                 title:const Text("Erro"),
-                                content: const Text("Login e/ou Senha inválido(s)"),
+                                content: const Text("Erro ao fazer cadastro, tente novamente"),
                                 actions : <Widget>[
                                   TextButton(
                                       child: const Text("OK"),
